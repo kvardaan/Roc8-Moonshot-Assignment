@@ -24,3 +24,35 @@ export const isAuthenticated = (): boolean => {
   const token = getAuthToken()
   return token !== null
 }
+
+export const loadPersistedState = () => {
+  const savedState = Cookies.get("appState")
+  if (savedState) {
+    const { age, gender, feature } = JSON.parse(savedState)
+    return { age, gender, feature }
+  }
+  return { age: "", gender: "", feature: "" }
+}
+
+export const persistState = (
+  age: string,
+  gender: string,
+  feature: string | null
+) => {
+  Cookies.set(
+    "appState",
+    JSON.stringify({
+      age,
+      gender,
+      feature,
+    })
+  )
+}
+
+export const clearPersistedState = () => {
+  Cookies.set("appState", JSON.stringify({ age: "", gender: "", feature: "" }))
+}
+
+export const removePersistedState = () => {
+  Cookies.remove("appState")
+}

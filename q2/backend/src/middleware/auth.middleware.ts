@@ -25,7 +25,7 @@ export const authMiddleware = (
 
   try {
     const decoded = verify(token, config.jwtSecret) as JwtPayload
-    console.log(typeof decoded.id)
+
     if (typeof decoded.id !== "string") {
       response.status(StatusCodes.UNAUTHORIZED).json({ error: "Invalid token" })
       return
@@ -55,7 +55,6 @@ export const doesUserExists = async (
   next: NextFunction
 ) => {
   const { email } = request.body
-  console.log({ email })
 
   try {
     const existingUser = await prisma.user.findUnique({

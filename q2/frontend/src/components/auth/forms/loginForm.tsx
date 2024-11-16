@@ -9,8 +9,8 @@ import { setAuthToken } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { LoginSchema } from "@/lib/schemas"
-import { FormError } from "@/components/formError"
-import { FormSuccess } from "@/components/formSuccess"
+import { FormError } from "@/components/auth/formError"
+import { FormSuccess } from "@/components/auth/formSuccess"
 import { CardWrapper } from "@/components/auth/cardWrapper"
 import {
   Form,
