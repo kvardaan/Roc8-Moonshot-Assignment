@@ -28,12 +28,12 @@ export const fetchSheetData = async (): Promise<SheetData[]> => {
       ), // Date conversion
       Age: rawObject["Age"].replace(/"/g, ""), // Clean up
       Gender: rawObject["Gender"].replace(/"/g, ""),
-      A: parseInt(rawObject["A"].replace(/"/g, ""), 10) / 3600, // Clean up and parse as number
-      B: parseInt(rawObject["B"].replace(/"/g, ""), 10) / 3600,
-      C: parseInt(rawObject["C"].replace(/"/g, ""), 10) / 3600,
-      D: parseInt(rawObject["D"].replace(/"/g, ""), 10) / 3600,
-      E: parseInt(rawObject["E"].replace(/"/g, ""), 10) / 3600,
-      F: parseInt(rawObject["F"].replace(/"/g, ""), 10) / 3600,
+      A: parseInt(rawObject["A"].replace(/"/g, ""), 10) / 60, // Clean up and parse as number
+      B: parseInt(rawObject["B"].replace(/"/g, ""), 10) / 60,
+      C: parseInt(rawObject["C"].replace(/"/g, ""), 10) / 60,
+      D: parseInt(rawObject["D"].replace(/"/g, ""), 10) / 60,
+      E: parseInt(rawObject["E"].replace(/"/g, ""), 10) / 60,
+      F: parseInt(rawObject["F"].replace(/"/g, ""), 10) / 60,
     }
   })
 

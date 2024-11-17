@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom"
 import { useEffect, useState } from "react"
 
 import { User } from "@/lib/types"
-import { getAuthToken } from "@/lib/utils"
+import { getAuthToken } from "@/lib/cookies"
 import { AppBar } from "@/components/dashboard/appBar"
 import { Footer } from "@/components/dashboard/footer"
 

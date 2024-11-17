@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useState, useTransition } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { setAuthToken } from "@/lib/utils"
+import { setAuthToken } from "@/lib/cookies"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { LoginSchema } from "@/lib/schemas"
@@ -24,11 +24,12 @@ import {
 const BACKEND_ROUTE = import.meta.env.VITE_BACKEND_ROUTE
 
 export const LoginForm = () => {
+  const navigate = useNavigate()
+
   const [error, setError] = useState<string | undefined>("")
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending] = useTransition()
   const [showPassword, setShowPassword] = useState(false)
-  const navigate = useNavigate()
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -59,7 +60,15 @@ export const LoginForm = () => {
         form.reset()
         setSuccess(data.success)
         setAuthToken(data.token)
-        navigate("/dashboard")
+
+        const redirectTo = sessionStorage.getItem("redirectTo")
+        console.log({ redirectTo })
+        if (redirectTo) {
+          sessionStorage.removeItem("redirectTo")
+          navigate(redirectTo)
+        } else {
+          navigate("/dashboard")
+        }
       }
     } catch {
       setError("Something went wrong!")

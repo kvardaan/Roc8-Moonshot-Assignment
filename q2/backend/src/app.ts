@@ -2,14 +2,15 @@ import cors from "cors"
 import express from "express"
 
 import { rootRouter } from "./routes/index"
+import { config } from "./utils/config/env"
 import loggingMiddlware from "./middleware/logging.middleware"
 
 const app = express()
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: config.feRoute,
+    methods: ["GET", "POST"],
   })
 )
 app.use(express.json())

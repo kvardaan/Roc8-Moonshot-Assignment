@@ -2,7 +2,7 @@ import { LogOut } from "lucide-react"
 import { Link, useNavigate } from "react-router-dom"
 
 import { Button } from "@/components/ui/button"
-import { clearAuthToken, getAuthToken } from "@/lib/utils"
+import { clearAuthToken, getAuthToken } from "@/lib/cookies"
 
 const BACKEND_ROUTE = import.meta.env.VITE_BACKEND_ROUTE
 

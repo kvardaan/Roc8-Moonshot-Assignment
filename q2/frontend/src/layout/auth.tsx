@@ -1,10 +1,13 @@
 import { Navigate, Outlet } from "react-router-dom"
 
-import { isAuthenticated } from "@/lib/utils"
+import { isAuthenticated } from "@/lib/cookies"
 
 export const AuthLayout = () => {
   if (isAuthenticated()) {
-    return <Navigate to="/dashboard" />
+    const redirectTo = sessionStorage.getItem("redirectTo")
+    sessionStorage.removeItem("redirectTo")
+
+    return <Navigate to={redirectTo || "/dashboard"} replace />
   }
 
   return (

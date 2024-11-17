@@ -1,4 +1,3 @@
-import Cookies from "js-cookie"
 import { twMerge } from "tailwind-merge"
 import { clsx, type ClassValue } from "clsx"
 
@@ -6,53 +5,47 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function getAuthToken(): string | null {
-  return Cookies.get("token") || null
+export interface FilterState {
+  startDate: string
+  endDate: string
+  age: string
+  gender: string
+  feature: string
 }
 
-export function setAuthToken(token: string) {
-  localStorage.setItem("token", token)
-  Cookies.set("token", token)
-}
-
-export function clearAuthToken() {
-  localStorage.removeItem("token")
-  Cookies.remove("token")
-}
-
-export const isAuthenticated = (): boolean => {
-  const token = getAuthToken()
-  return token !== null
-}
-
-export const loadPersistedState = () => {
-  const savedState = Cookies.get("appState")
-  if (savedState) {
-    const { age, gender, feature } = JSON.parse(savedState)
-    return { age, gender, feature }
-  }
-  return { age: "", gender: "", feature: "" }
-}
-
-export const persistState = (
+export const encodeFilterState = (
+  startDate: Date,
+  endDate: Date,
   age: string,
   gender: string,
-  feature: string | null
+  selectedFeature: string | null
 ) => {
-  Cookies.set(
-    "appState",
-    JSON.stringify({
-      age,
-      gender,
-      feature,
-    })
-  )
+  const params = new URLSearchParams()
+
+  params.set("startDate", startDate.toISOString())
+  params.set("endDate", endDate.toISOString())
+  if (age) params.set("age", age)
+  if (gender) params.set("gender", gender)
+  if (selectedFeature) params.set("feature", selectedFeature || "")
+
+  return params.toString()
 }
 
-export const clearPersistedState = () => {
-  Cookies.set("appState", JSON.stringify({ age: "", gender: "", feature: "" }))
-}
+export const decodeFilterState = (search: string): Partial<FilterState> => {
+  const params = new URLSearchParams(search)
+  const state: Partial<FilterState> = {}
 
-export const removePersistedState = () => {
-  Cookies.remove("appState")
+  const startDate = params.get("startDate")
+  const endDate = params.get("endDate")
+  const age = params.get("age")
+  const gender = params.get("gender")
+  const feature = params.get("feature")
+
+  if (startDate) state.startDate = startDate
+  if (endDate) state.endDate = endDate
+  if (age) state.age = age
+  if (gender) state.gender = gender
+  if (feature) state.feature = feature
+
+  return state
 }
